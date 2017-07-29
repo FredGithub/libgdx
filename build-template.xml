@@ -97,12 +97,13 @@ zipfileset id="jarfiles" -> the jar files to be merged with the project's classe
 		<mkdir dir="${distDir}/sources" />
 		
 		<!-- FIXME doesn't work for bullet, as this only takes the src/ folder -->
-		<jar destfile="${distDir}/sources/${jar}-sources.jar" basedir="src"/>			
+		<jar destfile="${distDir}/${jar}-sources.jar" basedir="src"/>			
 		
 		<!-- copy shared libs for desktop -->
 		<copy failonerror="false" todir="${distDir}">
 			<fileset dir="${libs}">
 				<include name="**/*-natives.jar"/>
+				<include name="**/*-natives-*.jar"/>
 				<exclude name="**/test-natives.jar"/>
 			</fileset>
 		</copy>
