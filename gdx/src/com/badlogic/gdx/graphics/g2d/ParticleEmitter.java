@@ -60,10 +60,6 @@ public class ParticleEmitter {
 	private ScaledNumericValue spawnHeightValue = new ScaledNumericValue();
 	private SpawnShapeValue spawnShapeValue = new SpawnShapeValue();
 	
-	private RangedNumericValue[] xSizeValues;
-	private RangedNumericValue[] ySizeValues;
-	private RangedNumericValue[] motionValues;
-
 	private float accumulator;
 	private Array<Sprite> sprites;
 	private SpriteMode spriteMode = SpriteMode.single;
@@ -1038,88 +1034,6 @@ public class ParticleEmitter {
 		return bounds;
 	}
 	
-	protected RangedNumericValue[] getXSizeValues (){
-		if (xSizeValues == null){
-			xSizeValues = new RangedNumericValue[3];
-			xSizeValues[0] = xScaleValue;
-			xSizeValues[1] = spawnWidthValue;
-			xSizeValues[2] = xOffsetValue;
-		}
-		return xSizeValues;
-	}
-	
-	protected RangedNumericValue[] getYSizeValues (){
-		if (ySizeValues == null){
-			ySizeValues = new RangedNumericValue[3];
-			ySizeValues[0] = yScaleValue;
-			ySizeValues[1] = spawnHeightValue;
-			ySizeValues[2] = yOffsetValue;
-		}
-		return ySizeValues;
-	}
-	
-	protected RangedNumericValue[] getMotionValues (){
-		if (motionValues == null){
-			motionValues = new RangedNumericValue[3];
-			motionValues[0] = velocityValue;
-			motionValues[1] = windValue;
-			motionValues[2] = gravityValue;
-		}
-		return motionValues;
-	}
-	
-	/** Permanently scales the size of the emitter by scaling all its ranged values related to size. */
-	public void scaleSize (float scale){
-		if (scale == 1f) return;
-		scaleSize(scale, scale);
-	}
-	
-	/** Permanently scales the size of the emitter by scaling all its ranged values related to size. */
-	public void scaleSize (float scaleX, float scaleY){
-		if (scaleX == 1f && scaleY == 1f) return;
-		for (RangedNumericValue value : getXSizeValues()) value.scale(scaleX);
-		for (RangedNumericValue value : getYSizeValues()) value.scale(scaleY);
-	}
-	
-	/** Permanently scales the speed of the emitter by scaling all its ranged values related to motion. */
-	public void scaleMotion (float scale){
-		if (scale == 1f) return;
-		for (RangedNumericValue value : getMotionValues()) value.scale(scale);
-	}
-	
-	/** Sets all size-related ranged values to match those of the template emitter. */
-	public void matchSize (ParticleEmitter template){
-		matchXSize(template);
-		matchYSize(template);
-	}
-	
-	/** Sets all horizontal size-related ranged values to match those of the template emitter. */
-	public void matchXSize (ParticleEmitter template){
-		RangedNumericValue[] values = getXSizeValues();
-		RangedNumericValue[] templateValues = template.getXSizeValues();
-		for (int i=0; i<values.length; i++){
-			values[i].set(templateValues[i]);
-		}
-	}
-	
-	/** Sets all vertical size-related ranged values to match those of the template emitter. */
-	public void matchYSize (ParticleEmitter template){
-		RangedNumericValue[] values = getYSizeValues();
-		RangedNumericValue[] templateValues = template.getYSizeValues();
-		for (int i=0; i<values.length; i++){
-			values[i].set(templateValues[i]);
-		}
-	}
-	
-	/** Sets all motion-related ranged values to match those of the template emitter. */
-	public void matchMotion (ParticleEmitter template){
-		RangedNumericValue[] values = getMotionValues();
-		RangedNumericValue[] templateValues = template.getMotionValues();
-		for (int i=0; i<values.length; i++){
-			values[i].set(templateValues[i]);
-		}
-	}
-
 	public void save (Writer output) throws IOException {
 		output.write(name + "\n");
 		output.write("- Delay -\n");

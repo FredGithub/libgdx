@@ -167,7 +167,7 @@ public class ParticleEmittersTest extends GdxTest {
 				effects.clear();
 			} else if (actor == scaleEffects) {
 				for (ParticleEffect eff : effects) {
-					eff.scaleEffect(1.5f);
+					eff.setScale(eff.getEmitters().get(0).getEmitterScaleX() * 1.5f, eff.getEmitters().get(0).getEmitterScaleY() * 1.5f);
 				}
 			}
 		}
